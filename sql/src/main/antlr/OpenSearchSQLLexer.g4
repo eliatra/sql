@@ -349,6 +349,10 @@ WILDCARD_QUERY:                     'WILDCARD_QUERY';
 SUBSTR:                             'SUBSTR';
 STRCMP:                             'STRCMP';
 
+// JSON FUNCTIONS
+JSON_EXTRACT:                       'JSON_EXTRACT';
+JSON_KEYS:                          'JSON_KEYS';
+
 // DATE AND TIME FUNCTIONS
 ADDDATE:                            'ADDDATE';
 YEARWEEK:                           'YEARWEEK';

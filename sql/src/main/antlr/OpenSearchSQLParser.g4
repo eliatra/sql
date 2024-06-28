@@ -335,6 +335,7 @@ functionCall
    | extractFunction                                            # extractFunctionCall
    | getFormatFunction                                          # getFormatFunctionCall
    | timestampFunction                                          # timestampFunctionCall
+   | jsonFunctionName LR_BRACKET functionArgs RR_BRACKET        # jsonFunctionCall
    ;
 
 timestampFunction
@@ -639,6 +640,11 @@ textFunctionName
    | REVERSE
    ;
 
+jsonFunctionName
+   : JSON_EXTRACT
+   | JSON_KEYS
+   ;
+
 flowControlFunctionName
    : IF
    | IFNULL
@@ -825,6 +831,7 @@ ident
    | BACKTICK_QUOTE_ID
    | keywordsCanBeId
    | scalarFunctionName
+   | jsonFunctionName
    ;
 
 keywordsCanBeId

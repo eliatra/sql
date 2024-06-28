@@ -154,6 +154,17 @@ class AstExpressionBuilderTest {
   }
 
   @Test
+  public void canBuildJsonFunctionCall() {
+    assertEquals(function("json_keys", stringLiteral("abc")), buildExprAst("json_keys(\"abc\")"));
+
+    assertEquals(function("json_extract"), buildExprAst("json_extract()"));
+
+    assertEquals(
+        function("json_extract", stringLiteral("abc"), stringLiteral("name")),
+        buildExprAst("json_extract(\"abc\",\"name\")"));
+  }
+
+  @Test
   public void canBuildNestedFunctionCall() {
     assertEquals(
         function("abs", function("*", function("abs", intLiteral(-5)), intLiteral(-1))),

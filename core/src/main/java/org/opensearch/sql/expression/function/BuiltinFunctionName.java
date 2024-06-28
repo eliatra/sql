@@ -201,6 +201,10 @@ public enum BuiltinFunctionName {
   TRIM(FunctionName.of("trim")),
   UPPER(FunctionName.of("upper")),
 
+  /** Json Functions. */
+  JSON_EXTRACT(FunctionName.of("json_extract")),
+  JSON_KEYS(FunctionName.of("json_keys")),
+
   /** NULL Test. */
   IS_NULL(FunctionName.of("is null")),
   IS_NOT_NULL(FunctionName.of("is not null")),

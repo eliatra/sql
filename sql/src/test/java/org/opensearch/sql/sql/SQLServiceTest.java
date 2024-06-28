@@ -76,6 +76,23 @@ class SQLServiceTest {
   }
 
   @Test
+  public void can_execute_sql_json_query() throws InterruptedException {
+    sqlService.execute(
+        new SQLQueryRequest(new JSONObject(), "SELECT json_extract('123','$.name')", QUERY, "jdbc"),
+        new ResponseListener<>() {
+          @Override
+          public void onResponse(QueryResponse response) {
+            assertNotNull(response);
+          }
+
+          @Override
+          public void onFailure(Exception e) {
+            fail(e);
+          }
+        });
+  }
+
+  @Test
   public void can_execute_cursor_query() {
     sqlService.execute(
         new SQLQueryRequest(new JSONObject(), null, QUERY, Map.of("format", "jdbc"), "n:cursor"),

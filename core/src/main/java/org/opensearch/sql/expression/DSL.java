@@ -404,6 +404,14 @@ public class DSL {
     return compile(FunctionProperties.None, BuiltinFunctionName.GET_FORMAT, expressions);
   }
 
+  public static FunctionExpression json_extract(Expression... expressions) {
+    return compile(FunctionProperties.None, BuiltinFunctionName.JSON_EXTRACT, expressions);
+  }
+
+  public static FunctionExpression json_keys(Expression... expressions) {
+    return compile(FunctionProperties.None, BuiltinFunctionName.JSON_KEYS, expressions);
+  }
+
   public static FunctionExpression hour(Expression... expressions) {
     return compile(FunctionProperties.None, BuiltinFunctionName.HOUR, expressions);
   }

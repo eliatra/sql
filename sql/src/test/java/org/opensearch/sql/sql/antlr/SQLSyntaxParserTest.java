@@ -271,6 +271,12 @@ class SQLSyntaxParserTest {
   }
 
   @Test
+  public void can_parse_json_function() {
+    assertNotNull(parser.parse("SELECT JSON_EXTRACT(abc, '$.name')"));
+    assertNotNull(parser.parse("SELECT JSON_KEYS('$.name')"));
+  }
+
+  @Test
   public void can_parse_hour_functions() {
     assertNotNull(parser.parse("SELECT hour('2022-11-18 12:23:34')"));
     assertNotNull(parser.parse("SELECT hour_of_day('12:23:34')"));

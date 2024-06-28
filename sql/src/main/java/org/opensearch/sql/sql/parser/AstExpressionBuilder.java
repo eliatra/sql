@@ -144,6 +144,12 @@ public class AstExpressionBuilder extends OpenSearchSQLParserBaseVisitor<Unresol
   }
 
   @Override
+  public UnresolvedExpression visitJsonFunctionCall(
+      OpenSearchSQLParser.JsonFunctionCallContext ctx) {
+    return buildFunction(ctx.jsonFunctionName().getText(), ctx.functionArgs().functionArg());
+  }
+
+  @Override
   public UnresolvedExpression visitHighlightFunctionCall(HighlightFunctionCallContext ctx) {
     ImmutableMap.Builder<String, Literal> builder = ImmutableMap.builder();
     ctx.highlightFunction()
