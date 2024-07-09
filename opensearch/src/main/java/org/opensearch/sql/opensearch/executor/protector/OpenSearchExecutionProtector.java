@@ -31,13 +31,6 @@ import org.opensearch.sql.planner.physical.ValuesOperator;
 import org.opensearch.sql.planner.physical.WindowOperator;
 import org.opensearch.sql.storage.TableScanOperator;
 
-// [ant:jacocoReport] Rule violated for class
-// org.opensearch.sql.opensearch.executor.protector.OpenSearchExecutionProtector: lines covered
-// ratio is 0.6, but expected minimum is 1.0
-// [ant:jacocoReport] Rule violated for class
-// org.opensearch.sql.opensearch.executor.protector.OpenSearchExecutionProtector: branches covered
-// ratio is 0.2, but expected minimum is 1.0
-
 /** OpenSearch Execution Protector. */
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -134,12 +127,13 @@ public class OpenSearchExecutionProtector extends ExecutionProtector {
 
   @Override
   public PhysicalPlan visitLookup(LookupOperator node, Object context) {
-    return new LookupOperator(visitInput(node.getInput(), context),
-            node.getIndexName(),
-            node.getMatchFieldMap(),
-            node.getAppendOnly(),
-            node.getCopyFieldMap(),
-            node.getLookup());
+    return new LookupOperator(
+        visitInput(node.getInput(), context),
+        node.getIndexName(),
+        node.getMatchFieldMap(),
+        node.getAppendOnly(),
+        node.getCopyFieldMap(),
+        node.getLookup());
   }
 
   @Override
