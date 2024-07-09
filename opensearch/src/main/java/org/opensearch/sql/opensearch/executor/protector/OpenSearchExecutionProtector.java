@@ -5,11 +5,8 @@
 
 package org.opensearch.sql.opensearch.executor.protector;
 
-import javax.annotation.Nullable;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.opensearch.sql.monitor.ResourceMonitor;
-import org.opensearch.sql.opensearch.client.OpenSearchClient;
 import org.opensearch.sql.opensearch.planner.physical.ADOperator;
 import org.opensearch.sql.opensearch.planner.physical.MLCommonsOperator;
 import org.opensearch.sql.opensearch.planner.physical.MLOperator;
@@ -33,15 +30,10 @@ import org.opensearch.sql.storage.TableScanOperator;
 
 /** OpenSearch Execution Protector. */
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class OpenSearchExecutionProtector extends ExecutionProtector {
 
   /** OpenSearch resource monitor. */
   private final ResourceMonitor resourceMonitor;
-
-  @Nullable
-  /** OpenSearch client. Maybe null * */
-  private OpenSearchClient openSearchClient;
 
   public PhysicalPlan protect(PhysicalPlan physicalPlan) {
     return physicalPlan.accept(this, null);
