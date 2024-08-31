@@ -49,7 +49,8 @@ import org.opensearch.sql.protocol.response.QueryResult;
  *      ]
  *    },
  *    "size": 2,
- *    "status": 200
+ *    "status": 200,
+ *    "took": 47
  *  }
  * </pre>
  */
@@ -65,6 +66,7 @@ public class VisualizationResponseFormatter extends JsonResponseFormatter<QueryR
         .metadata(constructMetadata(response))
         .size(response.size())
         .status(200)
+        .took(response.took())
         .build();
   }
 
@@ -144,6 +146,7 @@ public class VisualizationResponseFormatter extends JsonResponseFormatter<QueryR
     private final Metadata metadata;
     private final long size;
     private final int status;
+    private final Long took;
   }
 
   @RequiredArgsConstructor

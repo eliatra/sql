@@ -24,7 +24,7 @@ public class AsyncQueryResult extends QueryResult {
       Collection<ExprValue> exprValues,
       Cursor cursor,
       String error) {
-    super(schema, exprValues, cursor);
+    super(schema, exprValues, cursor, null);
     this.status = status;
     this.error = error;
   }
@@ -34,7 +34,7 @@ public class AsyncQueryResult extends QueryResult {
       ExecutionEngine.Schema schema,
       Collection<ExprValue> exprValues,
       String error) {
-    super(schema, exprValues);
+    super(schema, exprValues, null);
     this.status = status;
     this.error = error;
   }

@@ -48,6 +48,7 @@ public interface ExecutionEngine {
     private final Schema schema;
     private final List<ExprValue> results;
     private final Cursor cursor;
+    private final Long took;
   }
 
   @Data

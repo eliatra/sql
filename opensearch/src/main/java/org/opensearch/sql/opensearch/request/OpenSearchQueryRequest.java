@@ -15,6 +15,7 @@ import lombok.ToString;
 import org.opensearch.action.search.SearchRequest;
 import org.opensearch.action.search.SearchResponse;
 import org.opensearch.action.search.SearchScrollRequest;
+import org.opensearch.common.SetOnce;
 import org.opensearch.core.common.io.stream.StreamOutput;
 import org.opensearch.search.SearchHits;
 import org.opensearch.search.builder.SearchSourceBuilder;
@@ -47,6 +48,8 @@ public class OpenSearchQueryRequest implements OpenSearchRequest {
 
   /** Indicate the search already done. */
   private boolean searchDone = false;
+
+  private SetOnce<Long> took = new SetOnce<>();
 
   /** Constructor of OpenSearchQueryRequest. */
   public OpenSearchQueryRequest(
@@ -83,14 +86,17 @@ public class OpenSearchQueryRequest implements OpenSearchRequest {
       Function<SearchRequest, SearchResponse> searchAction,
       Function<SearchScrollRequest, SearchResponse> scrollAction) {
     if (searchDone) {
-      return new OpenSearchResponse(SearchHits.empty(), exprValueFactory, includes);
+      return new OpenSearchResponse(SearchHits.empty(), exprValueFactory, includes, took.get());
     } else {
       searchDone = true;
-      return new OpenSearchResponse(
-          searchAction.apply(
-              new SearchRequest().indices(indexName.getIndexNames()).source(sourceBuilder)),
-          exprValueFactory,
-          includes);
+      OpenSearchResponse openSearchResponse =
+          new OpenSearchResponse(
+              searchAction.apply(
+                  new SearchRequest().indices(indexName.getIndexNames()).source(sourceBuilder)),
+              exprValueFactory,
+              includes);
+      took.set(Long.valueOf(openSearchResponse.getTook()));
+      return openSearchResponse;
     }
   }
 

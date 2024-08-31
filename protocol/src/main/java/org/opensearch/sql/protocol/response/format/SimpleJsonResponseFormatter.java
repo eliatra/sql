@@ -28,7 +28,8 @@ import org.opensearch.sql.protocol.response.QueryResult;
  *          ["Smith"]
  *      ],
  *      "total": 2,
- *      "size": 2
+ *      "size": 2,
+ *      "took": 47
  *  }
  * </pre>
  */
@@ -47,6 +48,9 @@ public class SimpleJsonResponseFormatter extends JsonResponseFormatter<QueryResu
     response.columnNameTypes().forEach((name, type) -> json.column(new Column(name, type)));
 
     json.datarows(fetchDataRows(response));
+
+    json.took(response.took());
+
     return json.build();
   }
 
@@ -70,6 +74,7 @@ public class SimpleJsonResponseFormatter extends JsonResponseFormatter<QueryResu
 
     private long total;
     private long size;
+    private Long took;
   }
 
   @RequiredArgsConstructor

@@ -160,7 +160,11 @@ public class TransportPPLQueryAction
       public void onResponse(ExecutionEngine.QueryResponse response) {
         String responseContent =
             formatter.format(
-                new QueryResult(response.getSchema(), response.getResults(), response.getCursor()));
+                new QueryResult(
+                    response.getSchema(),
+                    response.getResults(),
+                    response.getCursor(),
+                    response.getTook()));
         listener.onResponse(new TransportPPLQueryResponse(responseContent));
       }
 

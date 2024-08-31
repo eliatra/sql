@@ -183,7 +183,11 @@ public class RestSQLQueryAction extends BaseRestHandler {
             channel,
             OK,
             formatter.format(
-                new QueryResult(response.getSchema(), response.getResults(), response.getCursor())),
+                new QueryResult(
+                    response.getSchema(),
+                    response.getResults(),
+                    response.getCursor(),
+                    response.getTook())),
             formatter.contentType());
       }
 

@@ -24,11 +24,12 @@ import org.opensearch.sql.opensearch.response.OpenSearchResponse;
 import org.opensearch.sql.opensearch.storage.OpenSearchStorageEngine;
 import org.opensearch.sql.planner.SerializablePlan;
 import org.opensearch.sql.storage.TableScanOperator;
+import org.opensearch.sql.storage.TookAware;
 
 /** OpenSearch index scan operator. */
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @ToString(onlyExplicitlyIncluded = true)
-public class OpenSearchIndexScan extends TableScanOperator implements SerializablePlan {
+public class OpenSearchIndexScan extends TableScanOperator implements SerializablePlan, TookAware {
 
   /** OpenSearch client. */
   private OpenSearchClient client;
@@ -44,6 +45,8 @@ public class OpenSearchIndexScan extends TableScanOperator implements Serializab
 
   /** Search response for current batch. */
   private Iterator<ExprValue> iterator;
+
+  private Long took;
 
   /** Creates index scan based on a provided OpenSearchRequestBuilder. */
   public OpenSearchIndexScan(
@@ -79,6 +82,7 @@ public class OpenSearchIndexScan extends TableScanOperator implements Serializab
 
   private void fetchNextBatch() {
     OpenSearchResponse response = client.search(request);
+    took = Long.valueOf(response.getTook());
     if (!response.isEmpty()) {
       iterator = response.iterator();
     }
@@ -148,5 +152,10 @@ public class OpenSearchIndexScan extends TableScanOperator implements Serializab
     out.write(reqAsBytes, 0, reqOut.size());
 
     out.writeInt(maxResponseSize);
+  }
+
+  @Override
+  public Long getTook() {
+    return took;
   }
 }

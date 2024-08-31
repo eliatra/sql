@@ -48,6 +48,8 @@ public class OpenSearchResponse implements Iterable<ExprValue> {
   /** List of requested include fields. */
   private final List<String> includes;
 
+  private final long took;
+
   /** OpenSearchExprValueFactory used to build ExprValue from search result. */
   @EqualsAndHashCode.Exclude private final OpenSearchExprValueFactory exprValueFactory;
 
@@ -60,15 +62,20 @@ public class OpenSearchResponse implements Iterable<ExprValue> {
     this.aggregations = searchResponse.getAggregations();
     this.exprValueFactory = exprValueFactory;
     this.includes = includes;
+    this.took = searchResponse.getTook().getMillis();
   }
 
   /** Constructor of OpenSearchResponse with SearchHits. */
   public OpenSearchResponse(
-      SearchHits hits, OpenSearchExprValueFactory exprValueFactory, List<String> includes) {
+      SearchHits hits,
+      OpenSearchExprValueFactory exprValueFactory,
+      List<String> includes,
+      long took) {
     this.hits = hits;
     this.aggregations = null;
     this.exprValueFactory = exprValueFactory;
     this.includes = includes;
+    this.took = took;
   }
 
   /**
@@ -83,6 +90,10 @@ public class OpenSearchResponse implements Iterable<ExprValue> {
 
   public boolean isAggregationResponse() {
     return aggregations != null;
+  }
+
+  public long getTook() {
+    return took;
   }
 
   /**
